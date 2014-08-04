@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+  <head>
+    {% block head %}
+    <link rel="stylesheet" href="">
+    <title>{% block title %}{% endblock %} - Flask Tutorial</title>
+    {% endblock %}
+  </head>
+  <body>
+    <div id="content">{% block content %}{% endblock %}</div>
+    <div id="footer">
+      {% block footer %}
+      &copy; Copyright 2013 by <a href="#">My Team</a>.
+      {% endblock %}
+    </div>
+  </body>
+</html>
