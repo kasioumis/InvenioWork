@@ -12,21 +12,19 @@
     {% block tail %}{% endblock -%}
 {%- endblock _bottom_assets %}
 {% block page_body %}{% block body %}
-<h3>All Tool Tips</h3>
+<h3>All Results</h3>
     <table  border="1">
 		<tr>
-			<th>Story ID</th>
+			<th>Story Title</th>
 			<th>Body</th>
-			<th>Target Element</th>
-			<th>Target Page</th>
+			<th>Creation Date</th>
 		</tr>
 		
-			{% for TOOLTIP in tooltips.nwsSTORY %}
+			{% for result in searchResult %}
 		<tr>
-			<td>{{tooltips.nwsSTORY}}</td>
-			<td>{{ TOOLTIP.body }}</td>
-			<td>{{ TOOLTIP.target_element }}</td>
-			<td>{{ TOOLTIP.target_page }}</td>
+			<td rel="tooltip" title data-placement="bottom" data-original-title="{{ result.nwsToolTip.body }}">{{ result.title }}</td>
+			<td rel="tooltip" title data-placement="bottom" data-original-title="{{ result.nwsToolTip.body }}">{{ result.body }}</td>
+			<td rel="tooltip" title data-placement="bottom" data-original-title="{{ result.nwsToolTip.body }}">{{ result.created }}</td>
 		</tr>
 			{% endfor %}
 		
