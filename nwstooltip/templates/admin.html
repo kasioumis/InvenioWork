@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block title %}Messages{% endblock %}
+{% block head %}
+  {{ super() }}
+  <style type="text/css">
+    .important { color: #336699; }
+  </style>
+{% endblock %}
+{% block content %}
+ 
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+ 
+    <h2>Add a new ToolTip</h2>
+    <form action="{{ url_for('admin') }}" method=post>
+      <p>Message:
+        <input type=text name=id_story value="Story ID" class=msginput>
+        <input type=text name=body value="Body" class=msginput>
+        <input type=text name=target_element value="Target Element" class=msginput>
+        <input type=text name=target_page1 value="Target Page" class=msginput>
+        <input type=submit value="Add a new ToolTip">
+    </form>
+    <br/><br/>
+    <h3>All Tool Tips</h3>
+    <table  border="1">
+		<tr>
+			<th>Story ID</th>
+			<th>Body</th>
+			<th>Target Element</th>
+			<th>Target Page</th>
+		</tr>
+		
+			{% for TOOLTIP in nwsTOOLTIP %}
+		<tr>
+			<td>{{ TOOLTIP.id_story }}</td>
+			<td>{{ TOOLTIP.body }}</td>
+			<td>{{ TOOLTIP.target_element }}</td>
+			<td>{{ TOOLTIP.target_page }}</td>
+		</tr>
+			{% endfor %}
+		
+    </table>
+{% endblock %}
