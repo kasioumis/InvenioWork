@@ -1,0 +1,35 @@
+{%- extends "page.html" -%}
+
+{% block header %}{{ super() }}
+    {% block head_meta %}{% endblock -%}
+    {% block head_tail %}{% endblock -%}
+{% endblock header -%}
+{% block pagefooteradd -%}
+    {{ super() }}
+{% endblock pagefooteradd -%}
+{%- block _bottom_assets %}
+    {{ super() }}
+    {% block tail %}{% endblock -%}
+{%- endblock _bottom_assets %}
+{% block page_body %}{% block body %}
+{%- for item in current_menu.submenu('main').children if item.visible recursive %}
+            {%- if item.children -%}
+              {%- if not current_user.is_guest and item.name == "admin" -%}
+                <li class="dropdown">.
+                  <a href="{{ item.url }}" style="display: inline-block; padding-right: 5px;"> {{ item.text|safe }} </a>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="display: inline-block; padding-left: 5px;">
+                    <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu pull-right">
+                    {{ loop(item.children) }}
+                  </ul>
+                </li>
+              {%- endif -%}
+            {%- else -%}
+            <li><a href="{{ item.url }}">{{ item.text|safe }}</a></li> 
+            {%- endif -%}
+        {%- endfor -%}
+{% endblock %}
+{% endblock %}
+
+{% block title %}{% endblock %}

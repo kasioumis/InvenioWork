@@ -1,0 +1,19 @@
+ <h3>All Tool Tips</h3>
+    <table  border="1">
+		<tr>
+			<th>Story ID</th>
+			<th>Body</th>
+			<th>Target Element</th>
+			<th>Target Page</th>
+		</tr>
+		
+			{% for TOOLTIP in nwsTOOLTIP %}
+		<tr>
+			<td>{{ TOOLTIP.id_story }}</td>
+			<td>{{ TOOLTIP.body }}</td>
+			<td>{{ TOOLTIP.target_element }}</td>
+			<td>{{ TOOLTIP.target_page }}</td>
+		</tr>
+			{% endfor %}
+		
+    </table>
