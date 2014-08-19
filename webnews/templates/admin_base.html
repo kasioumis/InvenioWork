@@ -45,7 +45,7 @@
                 </div>-->
                 <!-- /.row -->
 
-                <div class="row">
+                <div class="row" {{visibility_story}}>
                     <div class="col-lg-6">
                        <!--  <h1>Disabled Form States</h1>
 
@@ -80,7 +80,7 @@
                         <h1>News Stories</h1>
                         
 
-                      <form action="{{ url_for('webnew_addRecord') }}" method=post   >
+                      <form action="{{ url_for('admin/addrecord') }}" method=post   >
 
                             <div class="form-group has-success">
                                 <label class="control-label" for="inputSuccess">Title</label>
@@ -104,6 +104,11 @@
                              <div class="form-group has-success">
                                 <label class="control-label" for="inputSuccess">Target Page</label>
                                 <input type="text" class="form-control" name="txttarget_page"  required>
+                            </div>
+                            <h1>Tag</h1>
+                            <div class="form-group has-success">
+                                <label class="control-label" for="inputSuccess">Tag</label>
+                                <input type="text" class="form-control" name="txttag"  required>
                             </div>
 
                             <!--<div class="form-group has-success">

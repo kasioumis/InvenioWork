@@ -30,11 +30,13 @@ class NwsSTORY(db.Model):
     body = db.Column(db.Text, nullable=False, default='')
     created = db.Column(db.TIMESTAMP, nullable=False, server_default='9999-12-31 23:59:59')
     nwsToolTip = db.relationship('NwsToolTip', backref='nwsSTORY' )
+    nwsTAG = db.relationship('NwsTAG', backref='nwsSTORY' )
 
 class NwsTAG(db.Model):
     """Represents a nwsTAG record."""
     __tablename__ = 'nwsTAG'
     id = db.Column(db.Integer(15, unsigned=True), nullable=False, primary_key=True,autoincrement=True)
+    id_story = db.Column(db.Integer(15, unsigned=True), db.ForeignKey('nwsSTORY.id'))
     tag = db.Column(db.String(64), nullable=False, default='')
 
 

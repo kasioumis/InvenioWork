@@ -46,6 +46,27 @@
 </div>
 </div>
   </div>
+  <center>
+  <div {{resultshow}}>
+ <h3>All Results</h3>
+    <table  border="1">
+		<tr>
+			<th>Story Title</th>
+			<th>Body</th>
+			<th>Creation Date</th>
+		</tr>
+		
+			{% for result in searchResult %}
+		<tr>
+			<td rel="tooltip" title data-placement="bottom" data-original-title="{{ result.nwsToolTip.body }}">{{ result.title }}</td>
+			<td rel="tooltip" title data-placement="bottom" data-original-title="{{ result.nwsToolTip.body }}">{{ result.body }}</td>
+			<td rel="tooltip" title data-placement="bottom" data-original-title="{{ result.nwsToolTip.body }}">{{ result.created }}</td>
+		</tr>
+			{% endfor %}
+		
+    </table> 
+  </div>
+ </center>
 </div>
   
 {% endblock %}

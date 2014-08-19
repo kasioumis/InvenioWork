@@ -19,7 +19,7 @@ blueprint = Blueprint('webnew', __name__, template_folder='../templates',static_
 @blueprint.route('/')
 @register_menu(blueprint, 'main.webnew.search',config.CFG_WEBNEW_SEARCH_NAV_NAME)
 def search_index():
-    return render_template('search.html')
+    return render_template('search.html',resultshow='hidden')
 
 #@blueprint.route('/tooltip', methods=['GET', 'POST'])
 
@@ -31,7 +31,7 @@ def search_index():
 def do_search():
 	 if request.method == 'POST':
 		result = NwsSTORY.query.filter(NwsSTORY.title.contains(request.form['keywords']) | NwsSTORY.body.contains(request.form['keywords'])).all()
-		return render_template('result.html',searchResult=result)
+		return render_template('search.html',searchResult=result,resultshow='block')
 
 
 
