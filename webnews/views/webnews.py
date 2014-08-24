@@ -11,13 +11,13 @@ from sqlalchemy.exc import IntegrityError
 from werkzeug.debug import DebuggedApplication
 from .. import config
 
-blueprint = Blueprint('webnew', __name__, template_folder='../templates',static_folder='../static' )
-@register_menu(blueprint, 'main.webnew',config.CFG_WEBNEW_ADMIN_MAIN_NAV)
+blueprint = Blueprint('webnews', __name__, template_folder='../templates',static_folder='../static' )
+@register_menu(blueprint, 'main.webnews',config.CFG_WEBNEWS_ADMIN_MAIN_NAV)
 #@register_menu(blueprint, 'nwsToolTip', _('Search'), order=1)
 
 
 @blueprint.route('/')
-@register_menu(blueprint, 'main.webnew.search',config.CFG_WEBNEW_SEARCH_NAV_NAME)
+@register_menu(blueprint, 'main.webnews.search',config.CFG_WEBNEWS_SEARCH_NAV_NAME)
 def search_index():
     return render_template('search.html',resultshow='hidden')
 

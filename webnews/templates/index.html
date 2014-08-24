@@ -1,16 +1,4 @@
-{%- extends "page.html" -%}
-
-{% block header %}{{ super() }}
-    {% block head_meta %}{% endblock -%}
-    {% block head_tail %}{% endblock -%}
-{% endblock header -%}
-{% block pagefooteradd -%}
-    {{ super() }}
-{% endblock pagefooteradd -%}
-{%- block _bottom_assets %}
-    {{ super() }}
-    {% block tail %}{% endblock -%}
-{%- endblock _bottom_assets %}
+{% extends "layout.html" %}
 {% block page_body %}{% block body %}
 {%- for item in current_menu.submenu('main').children if item.visible recursive %}
             {%- if item.children -%}

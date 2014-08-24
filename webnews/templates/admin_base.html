@@ -1,16 +1,5 @@
- {%- extends "page.html" -%}
 
-{% block header %}{{ super() }}
-    {% block head_meta %}{% endblock -%}
-    {% block head_tail %}{% endblock -%}
-{% endblock header -%}
-{% block pagefooteradd -%}
-    {{ super() }}
-{% endblock pagefooteradd -%}
-{%- block _bottom_assets %}
-    {{ super() }}
-    {% block tail %}{% endblock -%}
-{%- endblock _bottom_assets %}
+{% extends "layout.html" %}
 {% block page_body %}{% block body %}
 
 {% with messages = get_flashed_messages() %}
@@ -80,21 +69,30 @@
                         <h1>News Stories</h1>
                         
 
-                      <form action="{{ url_for('admin/addrecord') }}" method=post   >
+                      <form action="{{ url_for('webnews/addrecord') }}" method=post   >
 
                             <div class="form-group has-success">
                                 <label class="control-label" for="inputSuccess">Title</label>
-                                <input type="text" class="form-control" name="txtTitle"  required>
+                                <input type="text" class="form-control" name="txtTitle" required>
                             </div>
 
                             <div class="form-group has-success">
                                 <label class="control-label" for="inputSuccess">Body</label>
-                               <textarea class="form-control" rows="3" name="txtBody_news"  required></textarea>
+                               <textarea class="form-control" rows="3" name="txtBody_news"   required></textarea>
                             </div>
+                            
+                           <div class="form-group has-success">
+                                 <label class="control-label" for="inputSuccess">Document Status</label>
+                                <select class="form-control" name="st_document_status">
+                                    <option>SHOW</option>
+                                    <option>HIDE</option>
+                                </select>
+                            </div>
+                            
                              <h1>ToolTip</h1>
                             <div class="form-group has-success">
                                 <label class="control-label" for="inputSuccess">Body</label>
-                               <textarea class="form-control" rows="3" name="txtBody_tooltip" required></textarea>
+                               <textarea class="form-control" rows="3" name="txtBody_tooltip"  required></textarea>
                             </div>
                             
                             <div class="form-group has-success">
@@ -103,13 +101,14 @@
                             </div>
                              <div class="form-group has-success">
                                 <label class="control-label" for="inputSuccess">Target Page</label>
-                                <input type="text" class="form-control" name="txttarget_page"  required>
+                                <input type="text" class="form-control" name="txttarget_page"    required>
                             </div>
                             <h1>Tag</h1>
                             <div class="form-group has-success">
                                 <label class="control-label" for="inputSuccess">Tag</label>
-                                <input type="text" class="form-control" name="txttag"  required>
+                                <input type="text" class="form-control" name="txttag"   required>
                             </div>
+                            
 
                             <!--<div class="form-group has-success">
                                 <label class="control-label" for="inputSuccess">Input with error</label>

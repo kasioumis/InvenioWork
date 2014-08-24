@@ -29,6 +29,7 @@ class NwsSTORY(db.Model):
     title = db.Column(db.String(256), nullable=False, default='')
     body = db.Column(db.Text, nullable=False, default='')
     created = db.Column(db.TIMESTAMP, nullable=False, server_default='9999-12-31 23:59:59')
+    document_status=db.Column(db.String(45), nullable=False, default='SHOW')
     nwsToolTip = db.relationship('NwsToolTip', backref='nwsSTORY' )
     nwsTAG = db.relationship('NwsTAG', backref='nwsSTORY' )
 
