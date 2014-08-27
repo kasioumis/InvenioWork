@@ -7,22 +7,26 @@ from flask import request, url_for, g, Markup, redirect, flash,Blueprint,render_
 from flask.ext import menu
 from ..models import  NwsToolTip,NwsSTORY,NwsTAG
 from flask.ext.menu import register_menu
+from invenio.ext.principal import permission_required
 from sqlalchemy.exc import IntegrityError
 from werkzeug.debug import DebuggedApplication
 from invenio.ext.sqlalchemy import db
 from .. import config
 
 
-blueprint = Blueprint('webnewsadmin', __name__, template_folder='../templates',static_folder='../static' )
-@register_menu(blueprint, 'main.webnewsadmin',config.CFG_WEBNEWS_ADMIN_NAV_NAME)
+
+blueprint = Blueprint('webnews.admin', __name__, template_folder='../templates',static_folder='../static' )
+#@register_menu(blueprint, 'main.webnewsadmin',config.CFG_WEBNEWS_ADMIN_NAV_NAME,custclass='glyphicon glyphicon-pencil')
 
 
-@blueprint.route('/webnews/Insert')
-@register_menu(blueprint, 'main.webnewsadmin.Insert',config.CFG_WEBNEWS_ADMIN_INSERT)
-def admin_Insert():
-    return render_template('admin.html',FormHeader='News Stories',visibility_story='block',searchResult=0)
-@blueprint.route('/webnews/addrecord', methods=['GET', 'POST'])
-def webnew_addRecord():
+
+
+
+@blueprint.route(config.CFG_WEBNEWS_ADMIN_INSERT, methods=['GET', 'POST'])
+@login_required
+@permission_required(config.CFG_WEBNEWS_WEBACCESSACTION)
+@register_menu(blueprint, 'webnews.menu.Insert',[config.CFG_WEBNEWS_ADMIN_MENU_INSERT,'glyphicon glyphicon-pencil','admin'])
+def Insert():
     stid=0
     if request.method == 'POST':
         try:
@@ -45,14 +49,17 @@ def webnew_addRecord():
             flash('Error')
             alert=config.CFG_WEBNEWS_ERROR_ALERT
         #return redirect(url_for('users'))
-	return  render_template('admin.html',alert=alert,storyID=stid,FormHeader='ToolTip',visibility_story='hidden')
-    else:
-        stories = NwsToolTip.query.all()
-        return render_template('admin.html')
+    return render_template('admin.html',FormHeader='News Stories',visibility_story='block',searchResult=0)
+	#return  render_template('admin.html',alert=alert,storyID=stid,FormHeader='ToolTip',visibility_story='hidden')
+   # else:
+        #stories = NwsToolTip.query.all()
+        #return render_template('admin.html')
 
 
-@blueprint.route('/webnews/updateRec', methods=['GET', 'POST'])
-def webnew_updateRecord():
+@blueprint.route(config.CFG_WEBNEWS_ADMIN_UPDATE, methods=['GET', 'POST'])
+@login_required
+@permission_required(config.CFG_WEBNEWS_WEBACCESSACTION)
+def Update():
 
     stid=0
     if request.method == 'POST':
@@ -80,24 +87,6 @@ def webnew_updateRecord():
         except:
             result = NwsSTORY.query.order_by(NwsSTORY.id.desc()).limit(config.CFG_WEBNEWS_ADMIN_SHOWRECORDS).all()
             return render_template('Edit.html',searchResult=result,resultshow='block')
-        #return redirect(url_for('users'))
-
-    else:
-        result = NwsSTORY.query.order_by(NwsSTORY.id.desc()).limit(config.CFG_WEBNEWS_ADMIN_SHOWRECORDS).all()
-        return render_template('Edit.html',searchResult=result,resultshow='block')
-
-
-
-
-@blueprint.route('/webnews/Edit')
-@register_menu(blueprint, 'main.webnewsadmin.Edit',config.CFG_WEBNEWS_ADMIN_EDIT)
-def admin_Edit():
-    result = NwsSTORY.query.order_by(NwsSTORY.id.desc()).limit(config.CFG_WEBNEWS_ADMIN_SHOWRECORDS).all()
-    return render_template('Edit.html',searchResult=result,resultshow='block')
-    
-    
-@blueprint.route('/webnews/Update')
-def admin_Update():
     try:
         id = request.args.get('id', None)
         result = NwsSTORY.query.get(id)
@@ -105,10 +94,32 @@ def admin_Update():
     except:
         result = NwsSTORY.query.order_by(NwsSTORY.id.desc()).limit(config.CFG_WEBNEWS_ADMIN_SHOWRECORDS).all()
         return render_template('Edit.html',searchResult=result,resultshow='block')
+        #return redirect(url_for('users'))
+
+    #else:
+     #   result = NwsSTORY.query.order_by(NwsSTORY.id.desc()).limit(config.CFG_WEBNEWS_ADMIN_SHOWRECORDS).all()
+      #  return render_template('Edit.html',searchResult=result,resultshow='block')
 
 
-@blueprint.route('/webnews/Delete')
-def admin_Delete():
+
+
+@blueprint.route(config.CFG_WEBNEWS_ADMIN_EDIT, methods=['GET', 'POST'])
+@login_required
+@permission_required(config.CFG_WEBNEWS_WEBACCESSACTION)
+@register_menu(blueprint, 'webnews.menu.Edit',[config.CFG_WEBNEWS_ADMIN_MENU_EDIT ,'glyphicon glyphicon-edit','admin'])
+def EDIT():
+    if request.method == 'POST':
+         result = NwsSTORY.query.filter(NwsSTORY.title.contains(request.form['keywords']) | NwsSTORY.body.contains(request.form['keywords'])).all()
+         return render_template('Edit.html',searchResult=result,resultshow='block')
+    result = NwsSTORY.query.order_by(NwsSTORY.id.desc()).limit(config.CFG_WEBNEWS_ADMIN_SHOWRECORDS).all()
+    return render_template('Edit.html',searchResult=result,resultshow='block')
+
+
+
+@blueprint.route(config.CFG_WEBNEWS_ADMIN_DELETE, methods=['GET', 'POST'])
+@login_required
+@permission_required(config.CFG_WEBNEWS_WEBACCESSACTION)
+def DELETE():
     try:
         id = request.args.get('id', None)
 

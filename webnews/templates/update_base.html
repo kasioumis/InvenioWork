@@ -1,57 +1,59 @@
 {% extends "layout.html" %}
 {% block page_body %}{% block body %}
 
- <form action="{{ url_for('webnews/updateRec') }}" method=post   >
-     <input type="hidden" name="news_ID" value="{{News_ID}}" />
-                <div class="row">
-	<div class="col-lg-4">
-		<h1>News Stories</h1>
-		<div class="form-group">
-			<label>Title</label>
-			<input class="form-control" name="story_txtTitle" value='{{searchResult.title}}' required />
+<div id="page-wrapper">
+	<div class="container-fluid">
+		<div class="row" >
+			<div class="col-lg-10">
+				<form action="{{ url_for(config.CFG_WEBNEWS_ADMIN_UPDATE[1:]) }}" method=post   >
+					<input type="hidden" name="news_ID" value="{{News_ID}}" />
+					<div class="row">
+						<div class="col-lg-4">
+							<h1>News Stories</h1>
+							<div class="form-group">
+								<label>Title</label>
+								<input class="form-control" name="story_txtTitle" value='{{searchResult.title}}' required />
+							</div>
+							<div class="form-group">
+								<label>Body</label>
+								<textarea class="form-control" rows="3" name="story_txtBody"   required>{{searchResult.body}}</textarea>
+							</div>
+							<div class="form-group">
+								<label>Document Status</label>
+								<input class="form-control" name="story_docStatus" pattern='SHOW|HIDE' value='{{searchResult.document_status}}'  required />
+								<p class=" label label-warning">This field only accept SHOW or HIDE</p>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<h1>ToolTip</h1>
+							<div class="form-group">
+								<label>Body</label>
+								<textarea class="form-control" rows="3" name="tooltip_txtBody"   required>{{searchResult.nwsToolTip[0].body}}</textarea>
+							</div>
+							<div class="form-group">
+								<label>Target Element</label>
+								<input class="form-control" name="tooltip_targetElement" value='{{searchResult.nwsToolTip[0].target_element}}' required />
+							</div>
+							<div class="form-group">
+								<label>Target Page</label>
+								<input class="form-control"  name="tooltip_targetPage" value='{{searchResult.nwsToolTip[0].target_page}}' required />
+							</div>
+						</div>
+						<div class="col-lg-3">
+							<h1>Tag</h1>
+							<div class="form-group">
+								<label>Tag</label>
+								<input class="form-control"  name="tag" value='{{searchResult.nwsTAG[0].tag}}' required />
+							</div>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-primary">Update</button>
+				</form>
+			</div>
 		</div>
-		<div class="form-group">
-			<label>Body</label>
-			 <textarea class="form-control" rows="3" name="story_txtBody"   required>{{searchResult.body}}</textarea>
-		</div>
-		<div class="form-group">
-			<label>Document Status</label>
-			<input class="form-control" name="story_docStatus" pattern='SHOW|HIDE' value='{{searchResult.document_status}}'  required />
-			<p class=" label label-warning">This field only accept SHOW or HIDE</p>
-		</div>
-	</div>
-
-	<div class="col-lg-4">
-		<h1>ToolTip</h1>
-		<div class="form-group">
-			<label>Body</label>
-			 <textarea class="form-control" rows="3" name="tooltip_txtBody"   required>{{searchResult.nwsToolTip[0].body}}</textarea>
-		</div>
-		<div class="form-group">
-			<label>Target Element</label>
-			<input class="form-control" name="tooltip_targetElement" value='{{searchResult.nwsToolTip[0].target_element}}' required />
-		</div>
-		<div class="form-group">
-			<label>Target Page</label>
-			<input class="form-control"  name="tooltip_targetPage" value='{{searchResult.nwsToolTip[0].target_page}}' required />
-		</div>
-
-	</div>
-
-	<div class="col-lg-4">
-		<h1>Tag</h1>
-		<div class="form-group">
-			<label>Tag</label>
-			<input class="form-control"  name="tag" value='{{searchResult.nwsTAG[0].tag}}' required />
-		</div>
-
 	</div>
 </div>
-                <!-- /.row -->
-     <button type="submit" class="btn btn-primary">Update</button>
-</form>
 
-  
 {% endblock %}
 {% endblock %}
 

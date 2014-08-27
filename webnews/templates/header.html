@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-##
+{#
 ## This file is part of Invenio.
 ## Copyright (C) 2014 CERN.
 ##
@@ -16,19 +15,7 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Invenio; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+#}
 
-"""Search bundles."""
-
-from invenio.ext.assets import Bundle
-
-js = Bundle( 
-    'js/jquery.js',
-    'js/bootstrap-transition.js',
-    'js/bootstrap-tooltip.js',
-    'js/holder.js',
-    'js/prettify.js',
-    'js/bootstrap-confirmation.js',
-    filters="requirejs",
-    output="webnews.js",
-    weight=50
-)
+{% extends "header_base.html" %}
+This has been over ridden

@@ -11,21 +11,3 @@
     {{ super() }}
     {% block tail %}{% endblock -%}
 {%- endblock _bottom_assets %}
- {% block global_bundles %}
-  {{ super() }}
-  {% bundles "webnews.js","webnews.css" %}
-{% endblock %}
-{% block javascript %}
-    <script type="text/javascript">
-
-        $(function(){
-           $('.Hikmat').tooltipster({
-				animation: 'fade',
-				delay: 200,
-                content: $('#divCont'),
-				interactive:true
-            });
-        })
-
-    </script>
-{% endblock javascript %}

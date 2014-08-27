@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-##
+{#
 ## This file is part of Invenio.
 ## Copyright (C) 2014 CERN.
 ##
@@ -16,22 +15,5 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Invenio; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
-
-"""Search bundles."""
-
-from invenio.ext.assets import Bundle
-
-js = Bundle( 
-    'js/jquery.tooltipster.js',
-    'js/webnewsfunc.js',
-    filters="requirejs",
-    output="webnews.js",
-    weight=50
-)
-styles = Bundle(
-    'css/tooltipster.css',
-    'css/custom.css',
-    filters="cleancss",
-    output="webnews.css",
-    weight=60
-)
+#}
+{%- extends "page_base.html" -%}

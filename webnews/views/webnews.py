@@ -3,7 +3,7 @@
 """nwsToolTip Flask Blueprint"""
 from flask import Flask
 from flask.ext.login import login_required
-from flask import request, url_for, g, Markup, redirect, flash,Blueprint,render_template
+from flask import request, url_for, g, Markup, redirect, flash,Blueprint,render_template,jsonify
 from flask.ext import menu
 from ..models import  NwsToolTip,NwsSTORY,NwsTAG
 from flask.ext.menu import register_menu
@@ -12,40 +12,38 @@ from werkzeug.debug import DebuggedApplication
 from .. import config
 
 blueprint = Blueprint('webnews', __name__, template_folder='../templates',static_folder='../static' )
-@register_menu(blueprint, 'main.webnews',config.CFG_WEBNEWS_ADMIN_MAIN_NAV)
-#@register_menu(blueprint, 'nwsToolTip', _('Search'), order=1)
+#@register_menu(blueprint, 'main.webnews',config.CFG_WEBNEWS_ADMIN_MAIN_NAV)
+#@register_menu(blueprint, 'webnews',config.CFG_WEBNEWS_ADMIN_MAIN_NAV)
 
 
-@blueprint.route('/')
-@register_menu(blueprint, 'main.webnews.search',config.CFG_WEBNEWS_SEARCH_NAV_NAME)
+@blueprint.route('/news')
+@register_menu(blueprint, 'webnews.menu.search',[config.CFG_WEBNEWS_SEARCH_NAV_NAME,'glyphicon glyphicon-search','general'])
 def search_index():
-    return render_template('search.html',resultshow='hidden')
+    result = NwsSTORY.query.filter_by(document_status='SHOW').limit(5).all()
+    return render_template('search.html',searchResult=result)
 
-#@blueprint.route('/tooltip', methods=['GET', 'POST'])
 
-#def index():
- #   tooltips = NwsToolTip.query.all()
-  #  return render_template('index.html',tooltips=tooltips)
-
-@blueprint.route('/do_search', methods=['GET', 'POST'])
+@blueprint.route('/webnews/do_search', methods=['GET', 'POST'])
 def do_search():
 	 if request.method == 'POST':
-		result = NwsSTORY.query.filter(NwsSTORY.title.contains(request.form['keywords']) | NwsSTORY.body.contains(request.form['keywords'])).all()
+		result = NwsSTORY.query.filter(NwsSTORY.title.contains(request.form['keywords']) | NwsSTORY.body.contains(request.form['keywords'])).filter_by(document_status='SHOW').all()
 		return render_template('search.html',searchResult=result,resultshow='block')
 
 
+@blueprint.route('/webnews/search/<RecordID>')
+def search_detailindex(RecordID):
+     try:
+         result = NwsSTORY.query.get(RecordID)
+         if result.document_status=='SHOW':
+             return render_template('storyDetail.html',searchResult=result)
+         else:
+             return 'Not allowed'
+     except:
+          return 'Not allowed'
 
-@blueprint.route('/webnew_admin/nav')
 
-def webnew_nav():
-	  return render_template('nav.html')
-
-#For Flask Menu
-
-#@blueprint.route('/flaskmenu')
-#@menu.register_menu(blueprint, '.', 'Home')
-#def menuFlask():
-  #  pass
-#@blueprint.route('/')
-#def FirstLoad_index():
-    #return redirect(url_for('nwsToolTip.search_index'))
+@blueprint.route('/show_tooltips')
+def show_tooltips():
+    targetpage = request.args.get('targetpage', 0, type=str)
+    result1 = NwsToolTip.query.filter_by(target_page=targetpage).all()
+    return jsonify(tooltip=[i.serialize for i in result1])

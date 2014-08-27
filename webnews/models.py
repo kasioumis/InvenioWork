@@ -22,6 +22,28 @@ class NwsToolTip(db.Model):
     target_element = db.Column(db.String(256), nullable=False,server_default='0')
     target_page = db.Column(db.String(256), nullable=False)
 
+
+    @property
+    def serialize(self):
+       """Return object data in easily serializeable format"""
+       return {
+           'id'         : self.id,
+           'id_story': self.id_story,
+           'body': self.body,
+           'target_element': self.target_element,
+           'target_page': self.target_page
+
+       }
+    @property
+    def serialize_many2many(self):
+       """
+       Return object's relations in easily serializeable format.
+       NB! Calls many2many's serialize property.
+       """
+       return [ item.serialize for item in self.nwsSTORY]
+
+
+
 class NwsSTORY(db.Model):
     """Represents a nwsSTORY record."""
     __tablename__ = 'nwsSTORY'
