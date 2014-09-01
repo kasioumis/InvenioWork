@@ -100,166 +100,6 @@
 {%- block body_start %}{% endblock body_start %}
 {%- block page_header -%}
   <div id="wrap">
-{% if "webnews" in request.endpoint %}
-       <div class="col-sm-2 col-md-2">
-            <div class="panel-group" id="accordion">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="glyphicon glyphicon-plus">
-                            </span>Menu </a>
-                        </h4>
-                    </div>
-                    <div id="collapseOne" class="panel-collapse collapse in">
-                        <div class="panel-body">
-                            <table class="table">
-
-                                {%- for item in current_menu.submenu('webnews.menu').children if item.visible recursive %}
-                                <tr>
-                                 {%- if current_user.is_admin and item.text[2] == "admin" -%}
-                                    <td><a href="{{ item.url }}">
-                                        <span class="{{ item.text[1]}} text-primary"></span> {{ item.text[0]|safe }}
-                                    </a>
-                                    </td>
-                                  {%- endif -%}
-                                  {%- if item.text[2] == "general" -%}
-                                     <td><a href="{{ item.url }}">
-                                        <span class="{{ item.text[1]}} text-primary"></span> {{ item.text[0]|safe }}
-                                    </a>
-                                    </td>
-                                    {%- endif -%}
-                                </tr>
-                                {% endfor %}
-                               <!--
-
-
-glyphicon glyphicon-glyphicon glyphicon-pencil
-                               <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-flash text-success"></span><a href="#">News</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-file text-info"></span><a href="#">Newsletters</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-comment text-success"></span><a href="#">Comments</a>
-                                        <span class="badge">42</span>
-                                    </td>
-                                </tr> -->
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default" >
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><span class="glyphicon glyphicon-th">
-                            </span>Modules</a>
-                        </h4>
-                    </div>
-                    <div id="collapseTwo" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <table class="table">
-                                <tr>
-                                    <td>
-                                        <a href="#">Orders</a> <span class="label label-success">$ 320</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="#">Invoices</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="#">Shipments</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="#">Tex</a>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><span class="glyphicon glyphicon-user">
-                            </span>Account</a>
-                        </h4>
-                    </div>
-                    <div id="collapseThree" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <table class="table">
-                                <tr>
-                                    <td>
-                                        <a href="#">Change Password</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="#">Notifications</a> <span class="label label-info">5</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="#">Import/Export</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-trash text-danger"></span><a href="#" class="text-danger">
-                                            Delete Account</a>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"><span class="glyphicon glyphicon-file">
-                            </span>Reports</a>
-                        </h4>
-                    </div>
-                    <div id="collapseFour" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <table class="table">
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-usd"></span><a href="#">Sales</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-user"></span><a href="#">Customers</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-tasks"></span><a href="#">Products</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-shopping-cart"></span><a href="#">Shopping Cart</a>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-{% endif %}
 
 
 
@@ -321,8 +161,15 @@ glyphicon glyphicon-glyphicon glyphicon-pencil
 
  <script type="text/javascript">
  $(function() {
+
+
+
+
+
+
+
     //$("[name='action_search']").bind('click', function(){
-       // alert({{request.endpoint|tojson|safe}});
+        //alert({{request.endpoint|tojson|safe}});
        $.getJSON( '/show_tooltips', {
         targetpage: {{ request.endpoint|tojson|safe }}
         }, function(data) {
@@ -335,7 +182,7 @@ glyphicon glyphicon-glyphicon glyphicon-pencil
                 VarforTooltip=$('[name="'+ data.tooltip[i].target_element + '"]');
 
                // vardiv="<div id='" + data.tooltip[i].target_element + "_tip'>	<div id='demo2_tipa'>		<b>Info for: Title</b>		<br />		<br />		<b>Target Page: " + data.tooltip[i].target_page + " </b>		<br />		<br />		<b>Target Element: " + data.tooltip[i].target_element + " </b>		<br />		<br />		<b>Tag: Tag </b>		<br />		<br />		<p> Body</p> " + data.tooltip[i].body + "	</div></div>";
-               vardiv="<div id='" + data.tooltip[i].target_element + "_tip'><div id='demo2_tipa'> Body</p> " + data.tooltip[i].body + "	</div><a href='/webnews/search/"+data.tooltip[i].id_story+"' >Read news story</a>	</div>";
+               vardiv="<div id='" + data.tooltip[i].target_element + "_tip'><div id='demo2_tipa'> Body</p> " + data.tooltip[i].body + "	</div><a href='{{ url_for(config.CFG_WEBNEWS_SEARCH[1:]) }}/?id="+data.tooltip[i].id_story+"' >Read news story</a>	</div>";
 
                 $('#ToolTipData').append($(vardiv));
 

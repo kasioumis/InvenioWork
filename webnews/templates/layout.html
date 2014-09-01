@@ -11,3 +11,20 @@
     {{ super() }}
     {% block tail %}{% endblock -%}
 {%- endblock _bottom_assets %}
+
+{% macro Encode(name,Arr='0') -%}
+    {{ EncodeStr(Arr) }}
+{%- endmacro %}
+{% block body %}
+
+{% if request.referrer %}
+<div class="col-lg-12"  >
+    <ol class="breadcrumb">
+        <li>
+          <i class="glyphicon glyphicon-fast-backward"></i>  <a href="{{url_for(request.referrer)}}">Back</a>
+        </li>
+
+    </ol>
+</div>
+{% endif %}
+{%- endblock %}

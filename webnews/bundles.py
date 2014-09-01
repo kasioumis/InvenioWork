@@ -23,6 +23,8 @@ from invenio.ext.assets import Bundle
 
 js = Bundle( 
     'js/jquery.tooltipster.js',
+    'js/bootstrap-tooltip.js',
+    'js/bootstrap-confirmation.js',
     'js/webnewsfunc.js',
     filters="requirejs",
     output="webnews.js",

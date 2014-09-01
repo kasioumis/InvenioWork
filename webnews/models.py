@@ -52,8 +52,8 @@ class NwsSTORY(db.Model):
     body = db.Column(db.Text, nullable=False, default='')
     created = db.Column(db.TIMESTAMP, nullable=False, server_default='9999-12-31 23:59:59')
     document_status=db.Column(db.String(45), nullable=False, default='SHOW')
-    nwsToolTip = db.relationship('NwsToolTip', backref='nwsSTORY' )
-    nwsTAG = db.relationship('NwsTAG', backref='nwsSTORY' )
+    nwsToolTip = db.relationship('NwsToolTip', backref='nwsSTORY',cascade='all, delete, delete-orphan')
+    nwsTAG = db.relationship('NwsTAG', backref='nwsSTORY',cascade='all, delete, delete-orphan')
 
 class NwsTAG(db.Model):
     """Represents a nwsTAG record."""
@@ -61,6 +61,16 @@ class NwsTAG(db.Model):
     id = db.Column(db.Integer(15, unsigned=True), nullable=False, primary_key=True,autoincrement=True)
     id_story = db.Column(db.Integer(15, unsigned=True), db.ForeignKey('nwsSTORY.id'))
     tag = db.Column(db.String(64), nullable=False, default='')
+
+
+    @property
+    def serialize_tag(self):
+       """Return object data in easily serializeable format"""
+       return {
+           'id_story': self.id_story
+
+
+       }
 
 
 
