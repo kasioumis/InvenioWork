@@ -21,10 +21,11 @@
 
 from invenio.ext.assets import Bundle
 
-js = Bundle( 
-    'js/jquery.tooltipster.js',
-    'js/bootstrap-tooltip.js',
-    'js/bootstrap-confirmation.js',
+js = Bundle(
+
+    'js/tooltip.js',
+
+    'js/popover.js',
     'js/webnewsfunc.js',
     filters="requirejs",
     output="webnews.js",
@@ -33,7 +34,14 @@ js = Bundle(
 styles = Bundle(
     'css/tooltipster.css',
     'css/custom.css',
+    'css/bootstrap-theme.min.css',
+    'css/bootstrap.min.css',
     filters="cleancss",
     output="webnews.css",
-    weight=60
+    weight=60,
+    bower={
+        "bootstrap": "3.2.0",
+        "font-awesome": "4.1.0",
+        "typeahead.js-bootstrap3.less": "0.2.3",
+    }
 )

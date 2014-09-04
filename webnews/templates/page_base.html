@@ -155,68 +155,34 @@
 {%- block _bottom_assets %}
   {% block global_scripts %}
     {%- include "base/scripts.html" %}
+
   {% endblock %}
 {%- endblock %}
 {%- block javascript %}
 
- <script type="text/javascript">
- $(function() {
-
-
-
-
-
-
-
-    //$("[name='action_search']").bind('click', function(){
-        //alert({{request.endpoint|tojson|safe}});
-       $.getJSON( '/show_tooltips', {
-        targetpage: {{ request.endpoint|tojson|safe }}
-        }, function(data) {
-            for(var i=0;i<data.tooltip.length;i++){
-              //alert(data.tooltip[i].target_page);
-              //All My Logic Will Be Here
-               // name='action_search';
-                //alert(namee)
-
-                VarforTooltip=$('[name="'+ data.tooltip[i].target_element + '"]');
-
-               // vardiv="<div id='" + data.tooltip[i].target_element + "_tip'>	<div id='demo2_tipa'>		<b>Info for: Title</b>		<br />		<br />		<b>Target Page: " + data.tooltip[i].target_page + " </b>		<br />		<br />		<b>Target Element: " + data.tooltip[i].target_element + " </b>		<br />		<br />		<b>Tag: Tag </b>		<br />		<br />		<p> Body</p> " + data.tooltip[i].body + "	</div></div>";
-               vardiv="<div id='" + data.tooltip[i].target_element + "_tip'><div id='demo2_tipa'> Body</p> " + data.tooltip[i].body + "	</div><a href='{{ url_for(config.CFG_WEBNEWS_SEARCH[1:]) }}/?id="+data.tooltip[i].id_story+"' >Read news story</a>	</div>";
-
-                $('#ToolTipData').append($(vardiv));
-
-
-                //element=data.tooltip[i].target_element;
-
-                $(VarforTooltip).bind("mouseover", function() {
-
-                    //alert($(this).attr('name'));
-
-
-
-
-                    theFunc(this,"#" + $(this).attr('name')+ "_tip")
-
-               });
-
-            }
-      });
-
-  });
-
-
-
- /*
-
-  $('input[name="' + name + '"]').hide();
- $(".dropdown ul li").live("mouseover", function() {
-alert('mouseover works');
+<script type="text/javascript">
+$(function() {
+    $(document).on( "click",'a.closetooltip', function() {
+        $($(this).attr("myparentinfo")).popover('hide')
+    });
+        $.getJSON( '/show_tooltips', {
+            targetpage: {{ request.endpoint|tojson|safe }}
+            }, function(data) {
+                    for(var i=0;i<data.tooltip.length;i++){
+                        VarforTooltip=$(data.tooltip[i].target_element );
+                        vardiv="<div id='" + data.tooltip[i].target_element + "_tip'><p> " + data.tooltip[i].body + "</p><p><a style='color:#030367;' href='{{ url_for(config.CFG_WEBNEWS_SEARCH[1:]) }}/?id="+data.tooltip[i].id_story+"'>ReadMore</a> <a style='float:right; color:#030367' class='closetooltip' href='#' myparentinfo='"+data.tooltip[i].target_element+"' >Dismiss</a></p></div>";
+                        $('#ToolTipData').append($(vardiv));
+                        $(VarforTooltip).popover({
+                            content:vardiv,
+                            trigger : "manual",
+                            html:true,
+                            placement : "bottom"
+                        }).show(function(){
+                            $(this).popover('show');
+                        });
+                    }
+        });
 });
- */
-
-
-
 </script>
 
 {% endblock %}
