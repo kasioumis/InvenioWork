@@ -78,6 +78,10 @@
                                     <option>HIDE</option>
                                 </select>
                             </div>
+                            <input type="hidden" name="remote_ip" value='{{current_user.remote_ip}}' >
+                            <input type="hidden" name="email" value='{{current_user.email}}' >
+                            <input type="hidden" name="nickname" value='{{current_user.nickname}}' >
+                            <input type="hidden" name="uid" value='{{current_user.uid}}' >
                             <input type="hidden" name="_action" value='{{config.CFG_WEBNEWS_ADMIN_ACTION_NEWS}}' >
                             <button type="submit" class="btn btn-primary">Continue</button>
                         </form>

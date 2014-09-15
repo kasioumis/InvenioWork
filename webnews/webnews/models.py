@@ -4,11 +4,15 @@ nwsToolTip database models.
 # General imports.
 from invenio.ext.sqlalchemy import db
 from sqlalchemy.ext.associationproxy import association_proxy
-
-# Create your models here.
 from invenio.modules.accounts.models import User
 from invenio.modules.baskets.models import BskBASKET
 from invenio.modules.search.models import WebQuery
+import pickle
+from datetime import timedelta
+from uuid import uuid4
+from redis import Redis
+from werkzeug.datastructures import CallbackDict
+from flask.sessions import SessionInterface, SessionMixin
 
 
 
@@ -47,13 +51,20 @@ class NwsToolTip(db.Model):
 class NwsSTORY(db.Model):
     """Represents a nwsSTORY record."""
     __tablename__ = 'nwsSTORY'
-    id = db.Column(db.Integer(15, unsigned=True), nullable=False, primary_key=True,autoincrement=True)
+    id = db.Column(db.Integer(11, unsigned=True), nullable=False, primary_key=True,autoincrement=True)
     title = db.Column(db.String(256), nullable=False, default='')
     body = db.Column(db.Text, nullable=False, default='')
     created = db.Column(db.TIMESTAMP, nullable=False, server_default='9999-12-31 23:59:59')
     document_status=db.Column(db.String(45), nullable=False, default='SHOW')
+    remote_ip=db.Column(db.String(100), nullable=False, default='0.0.0.0')
+    email=db.Column(db.String(100), nullable=False, default='admin@admin.com')
+    nickname=db.Column(db.String(100), nullable=False, default='admin')
+    uid=db.Column(db.Integer(11, unsigned=True), nullable=False)
     nwsToolTip = db.relationship('NwsToolTip', backref='nwsSTORY',cascade='all, delete, delete-orphan')
     nwsTAG = db.relationship('NwsTAG', backref='nwsSTORY',cascade='all, delete, delete-orphan')
+
+
+
 
 class NwsTAG(db.Model):
     """Represents a nwsTAG record."""
@@ -71,10 +82,3 @@ class NwsTAG(db.Model):
 
 
        }
-
-
-
-#def init_db(app):
-#    db.init_app(app)
-#    return app
-

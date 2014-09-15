@@ -36,6 +36,9 @@
 								<th>Story Title</th>
 								<th>Body</th>
 								<th>Creation Date</th>
+                                <th>Creater Nick Name</th>
+                                <th>Creater Email</th>
+                                <th>Creater IP</th>
 								<th>Edit</th>
 								<th>Delete</th>
 							</tr>
@@ -46,6 +49,9 @@
 								<td rel="tooltip" title data-placement="bottom" >{{ result.title }}</td>
 								<td rel="tooltip" title data-placement="bottom" >{{ result.body }}</td>
 								<td rel="tooltip" title data-placement="bottom" >{{ result.created }}</td>
+                                <td rel="tooltip" title data-placement="bottom" >{{ result.nickname }}</td>
+                                <td rel="tooltip" title data-placement="bottom" >{{ result.email }}</td>
+                                <td rel="tooltip" title data-placement="bottom" >{{ result.remote_ip }}</td>
 								<td><a href="{{ url_for(config.CFG_WEBNEWS_ADMIN_UPDATE[1:]) }}/?id={{Encode(Arr=result.id)}}" data-toggle="confirmation" data-placement="right" data-original-title="" title="" ><span class="glyphicon glyphicon-edit"></span></a></td>
 								<td><a href="{{ url_for(config.CFG_WEBNEWS_ADMIN_DELETE[1:]) }}/?id={{Encode(Arr=result.id)}}"  onclick="return confirm('Are you sure you want to delete?')" ><span class="glyphicon glyphicon-trash"></span></a></td>
 
