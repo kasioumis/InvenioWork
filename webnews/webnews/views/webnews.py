@@ -10,6 +10,7 @@ from flask.ext.menu import register_menu
 from sqlalchemy.exc import IntegrityError
 from werkzeug.debug import DebuggedApplication
 from .. import config
+from invenio.ext.sqlalchemy import db
 from ..encoder import Encode,Decode
 blueprint = Blueprint('webnews', __name__, template_folder='../templates',static_folder='../static' )
 #@register_menu(blueprint, 'main.webnews',config.CFG_WEBNEWS_ADMIN_MAIN_NAV)
@@ -18,8 +19,13 @@ blueprint = Blueprint('webnews', __name__, template_folder='../templates',static
 @blueprint.route(config.CFG_WEBNEWS_MENU_INDEX)
 @register_menu(blueprint, 'webnews.menu.search',[config.CFG_WEBNEWS_SEARCH_NAV_NAME,'glyphicon glyphicon-search','general'])
 def index():
-    result = NwsSTORY.query.filter_by(document_status='SHOW').limit(5).all()
-    return render_template('search.html',searchResult=result ,EncodeStr=Encode)
+    try:
+         result = NwsSTORY.query.filter_by(document_status='SHOW').limit(5).all()
+         return render_template('search.html',searchResult=result ,EncodeStr=Encode)
+    except:
+       db.create_all()
+       return redirect(config.CFG_WEBNEWS_MENU_INDEX)
+
 
 
 @blueprint.route(config.CFG_WEBNEWS_SEARCH, methods=['GET', 'POST'])

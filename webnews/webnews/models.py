@@ -17,6 +17,24 @@ from flask.sessions import SessionInterface, SessionMixin
 
 
 
+
+
+class NwsSTORY(db.Model):
+    """Represents a nwsSTORY record."""
+    __tablename__ = 'nwsSTORY'
+    id = db.Column(db.Integer(11, unsigned=True), nullable=False, primary_key=True,autoincrement=True)
+    title = db.Column(db.String(256), nullable=False, default='')
+    body = db.Column(db.Text, nullable=False, default='')
+    created = db.Column(db.TIMESTAMP, nullable=False)
+    document_status=db.Column(db.String(45), nullable=False, default='SHOW')
+    remote_ip=db.Column(db.String(100), nullable=False, default='0.0.0.0')
+    email=db.Column(db.String(100), nullable=False, default='admin@admin.com')
+    nickname=db.Column(db.String(100), nullable=False, default='admin')
+    uid=db.Column(db.Integer(11, unsigned=True), nullable=False)
+    nwsToolTip = db.relationship('NwsToolTip', backref='nwsSTORY',cascade='all, delete, delete-orphan')
+    nwsTAG = db.relationship('NwsTAG', backref='nwsSTORY',cascade='all, delete, delete-orphan')
+
+
 class NwsToolTip(db.Model):
     """Represents a NwsToolTip record."""
     __tablename__ = 'nwsTOOLTIP'
@@ -45,24 +63,6 @@ class NwsToolTip(db.Model):
        NB! Calls many2many's serialize property.
        """
        return [ item.serialize for item in self.nwsSTORY]
-
-
-
-class NwsSTORY(db.Model):
-    """Represents a nwsSTORY record."""
-    __tablename__ = 'nwsSTORY'
-    id = db.Column(db.Integer(11, unsigned=True), nullable=False, primary_key=True,autoincrement=True)
-    title = db.Column(db.String(256), nullable=False, default='')
-    body = db.Column(db.Text, nullable=False, default='')
-    created = db.Column(db.TIMESTAMP, nullable=False, server_default='9999-12-31 23:59:59')
-    document_status=db.Column(db.String(45), nullable=False, default='SHOW')
-    remote_ip=db.Column(db.String(100), nullable=False, default='0.0.0.0')
-    email=db.Column(db.String(100), nullable=False, default='admin@admin.com')
-    nickname=db.Column(db.String(100), nullable=False, default='admin')
-    uid=db.Column(db.Integer(11, unsigned=True), nullable=False)
-    nwsToolTip = db.relationship('NwsToolTip', backref='nwsSTORY',cascade='all, delete, delete-orphan')
-    nwsTAG = db.relationship('NwsTAG', backref='nwsSTORY',cascade='all, delete, delete-orphan')
-
 
 
 
